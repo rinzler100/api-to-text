@@ -1,3 +1,4 @@
+
 function copyToClipboard(event) {
     const text = event.target.getAttribute('data-message');
     navigator.clipboard.writeText(text).then(() => {
@@ -9,7 +10,6 @@ function copyToClipboard(event) {
         flashColor(event.target, 'green');
     });
 }
-
 
 function flashColor(element, color) {
   let originalColor = window.getComputedStyle(element).backgroundColor;
@@ -33,8 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const title = document.createElement('h2');
                 title.textContent = key;
 
+                const decodedValue = decodeURIComponent(value); // Decode the URI component
+
                 const info = document.createElement('p');
-                info.setAttribute('data-message', value);
+                info.setAttribute('data-message', decodedValue);
                 info.setAttribute('onclick', 'copyToClipboard(event)');
 
                 const copiedSpan = document.createElement('span');
@@ -42,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 copiedSpan.textContent = 'Copied!';
                 copiedSpan.style.display = 'none';
 
-                const textNode = document.createTextNode(value);
+                const textNode = document.createTextNode(decodedValue); // Use decoded value
 
                 info.appendChild(copiedSpan);
                 info.appendChild(textNode);
