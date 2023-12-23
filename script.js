@@ -25,44 +25,43 @@ function flashColor(element, color) {
 document.addEventListener('DOMContentLoaded', function() {
     const queryString = window.location.search;
     if (queryString) {
-        try {
-            const params = new URLSearchParams(queryString);
-            const container = document.querySelector('.container');
-            container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
+        const params = new URLSearchParams(queryString);
 
-            params.forEach((value, key) => {
-                console.log('Key:', key, 'Value:', value); // Debugging line
+        const container = document.querySelector('.container');
+        container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
 
-                if (key) {
-                    const title = document.createElement('h2');
-                    title.textContent = key; // Key is already decoded
+        params.forEach((value, key) => {
+            // Reverse the replacements
+            key = key.replace(/_space_/g, " "); // Replace "_space_" back with a space
+            // Add more replacements as needed for other characters
 
-                    const info = document.createElement('p');
-                    info.setAttribute('data-message', value);
-                    info.setAttribute('onclick', 'copyToClipboard(event)');
+            if (key) {
+                const title = document.createElement('h2');
+                title.textContent = key;
 
-                    const copiedSpan = document.createElement('span');
-                    copiedSpan.className = 'copied';
-                    copiedSpan.textContent = 'Copied!';
-                    copiedSpan.style.display = 'none';
+                const info = document.createElement('p');
+                info.setAttribute('data-message', value);
+                info.setAttribute('onclick', 'copyToClipboard(event)');
 
-                    const textNode = document.createTextNode(value); // Value is already decoded
+                const copiedSpan = document.createElement('span');
+                copiedSpan.className = 'copied';
+                copiedSpan.textContent = 'Copied!';
+                copiedSpan.style.display = 'none';
 
-                    info.appendChild(copiedSpan);
-                    info.appendChild(textNode);
+                const textNode = document.createTextNode(value);
 
-                    container.appendChild(title);
-                    container.appendChild(info);
-                }
-            });
-        } catch (error) {
-            console.error('Error parsing query string:', error);
-            // Handle error or display error message
-        }
+                info.appendChild(copiedSpan);
+                info.appendChild(textNode);
+
+                container.appendChild(title);
+                container.appendChild(info);
+            }
+        });
     } else {
         const container = document.querySelector('.container');
-        container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 id="example">To show data, add <i>?title=description&title2=description2</i> etc.</h5>';
+        container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 class="note">&#128161 To show data, add <i>?title=description&title2=description2</i> etc.</h5><h5 class="note">&#10060 URI encoded characters like <i>%20</i> aren\'t supported in title values, so use <i>_space_</i> instead (<a href="?Some_space_Long_space_Title=The%20description%20can%20have%20anything%20including%20the%20string%20"_space_"">like this</a>).</h5>'; 
     }
 });
+
 
 
