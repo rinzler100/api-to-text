@@ -25,35 +25,44 @@ function flashColor(element, color) {
 document.addEventListener('DOMContentLoaded', function() {
     const queryString = window.location.search;
     if (queryString) {
-        const params = new URLSearchParams(queryString);
-        const container = document.querySelector('.container');
-        container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
-        params.forEach((value, key) => {
-            if (key) {
-                const title = document.createElement('h2');
-                title.textContent = key; // Key is already decoded
-                
-                const info = document.createElement('p');
-                info.setAttribute('data-message', value);
-                info.setAttribute('onclick', 'copyToClipboard(event)');
+        try {
+            const params = new URLSearchParams(queryString);
+            const container = document.querySelector('.container');
+            container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
 
-                const copiedSpan = document.createElement('span');
-                copiedSpan.className = 'copied';
-                copiedSpan.textContent = 'Copied!';
-                copiedSpan.style.display = 'none';
+            params.forEach((value, key) => {
+                console.log('Key:', key, 'Value:', value); // Debugging line
 
-                const textNode = document.createTextNode(value); // Value is already decoded
+                if (key) {
+                    const title = document.createElement('h2');
+                    title.textContent = key; // Key is already decoded
 
-                info.appendChild(copiedSpan);
-                info.appendChild(textNode);
+                    const info = document.createElement('p');
+                    info.setAttribute('data-message', value);
+                    info.setAttribute('onclick', 'copyToClipboard(event)');
 
-                container.appendChild(title);
-                container.appendChild(info);
-            }
-        });
+                    const copiedSpan = document.createElement('span');
+                    copiedSpan.className = 'copied';
+                    copiedSpan.textContent = 'Copied!';
+                    copiedSpan.style.display = 'none';
+
+                    const textNode = document.createTextNode(value); // Value is already decoded
+
+                    info.appendChild(copiedSpan);
+                    info.appendChild(textNode);
+
+                    container.appendChild(title);
+                    container.appendChild(info);
+                }
+            });
+        } catch (error) {
+            console.error('Error parsing query string:', error);
+            // Handle error or display error message
+        }
     } else {
         const container = document.querySelector('.container');
         container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 id="example">To show data, add <i>?title=description&title2=description2</i> etc.</h5>';
     }
 });
+
 
