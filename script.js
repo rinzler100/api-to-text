@@ -23,20 +23,18 @@ function flashColor(element, color) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const queryString = window.location.href.split('?')[1];
+    const queryString = window.location.search;
     if (queryString) {
-        const params = new URLSearchParams('?' + queryString);
+        const params = new URLSearchParams(queryString);
         const container = document.querySelector('.container');
         container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
         params.forEach((value, key) => {
             if (key) {
-                const decodedKey = decodeURIComponent(key); // Decode the key
                 const title = document.createElement('h2');
-                title.textContent = decodedKey;
+                title.textContent = key; // Key is already decoded
                 
-                const decodedValue = decodeURIComponent(value); // Decode the description
                 const info = document.createElement('p');
-                info.setAttribute('data-message', decodedValue);
+                info.setAttribute('data-message', value);
                 info.setAttribute('onclick', 'copyToClipboard(event)');
 
                 const copiedSpan = document.createElement('span');
@@ -44,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 copiedSpan.textContent = 'Copied!';
                 copiedSpan.style.display = 'none';
 
-                const textNode = document.createTextNode(decodedValue); // Use decoded value
+                const textNode = document.createTextNode(value); // Value is already decoded
 
                 info.appendChild(copiedSpan);
                 info.appendChild(textNode);
@@ -58,3 +56,4 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 id="example">To show data, add <i>?title=description&title2=description2</i> etc.</h5>';
     }
 });
+
