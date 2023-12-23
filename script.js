@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = '<h1>Info Display (Click to Copy):</h1>';
         params.forEach((value, key) => {
             if (key) {
+                const decodedKey = decodeURIComponent(key); // Decode the key
                 const title = document.createElement('h2');
-                title.textContent = key;
-
-                const decodedValue = decodeURIComponent(value); // Decode the URI component
-
+                title.textContent = decodedKey;
+                
+                const decodedValue = decodeURIComponent(value); // Decode the description
                 const info = document.createElement('p');
                 info.setAttribute('data-message', decodedValue);
                 info.setAttribute('onclick', 'copyToClipboard(event)');
