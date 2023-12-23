@@ -19,7 +19,7 @@ function flashColor(element, color) {
   setTimeout(() => {
     element.style.backgroundColor = originalColor;
     copiedElement.style.opacity = 0;
-  }, 1000);
+  }, 4000);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -32,8 +32,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         params.forEach((value, key) => {
             // Reverse the replacements
-            key = key.replace(/_space_/g, " "); // Replace "_space_" back with a space
-            // Add more replacements as needed for other characters
+            key = key.replace(/_space_/g, " ")       // Replace "_space_" with a space
+                .replace(/_ampersand_/g, "&")   // Replace "_ampersand_" with "&"
+                .replace(/_plus_/g, "+")        // Replace "_plus_" with "+"
+                .replace(/_percent_/g, "%");    // Replace "_percent_" with "%"
 
             if (key) {
                 const title = document.createElement('h2');
