@@ -22,6 +22,13 @@ function flashColor(element, color) {
   }, 4000);
 }
 
+function decodeString(str) {
+    return str.replace(/_space_/g, " ")
+              .replace(/_ampersand_/g, "&")
+              .replace(/_plus_/g, "+")
+              .replace(/_percent_/g, "%");
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const queryString = window.location.search;
     if (queryString) {
@@ -32,15 +39,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         params.forEach((value, key) => {
             // Reverse the replacements
-            key = key.replace(/_space_/g, " ")       // Replace "_space_" with a space
-                .replace(/_ampersand_/g, "&")   // Replace "_ampersand_" with "&"
-                .replace(/_plus_/g, "+")        // Replace "_plus_" with "+"
-                .replace(/_percent_/g, "%");    // Replace "_percent_" with "%"
 
             if (key) {
+                key = decodeString(key);
                 const title = document.createElement('h2');
                 title.textContent = key;
 
+                value = value.replace(/_ampersand_/g, "&")
                 const info = document.createElement('p');
                 info.setAttribute('data-message', value);
                 info.setAttribute('onclick', 'copyToClipboard(event)');
