@@ -66,6 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         const container = document.querySelector('.container');
-        container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 class="note">&#128161 To show data, add <i>?title=description&title2=description2</i> etc.</h5><h5 class="note">&#10060 Use standard URL encoding for special characters, e.g., <i>%20</i> for space, <i>%26</i> for &.</h5>';
+        container.innerHTML = '<h1>No information was given to display.</h1>\n<h5 class="note">&#128161 To show data, add <i>?title=description&title2=description2</i> etc.</h5><h5 class="note">&#10060 Use standard <a href="https://www.urlencoder.io" target="_blank">URL encoding</a> for special characters, e.g., <i>%20</i> for space, <i>%26</i> for &.</h5>';
     }
 });
