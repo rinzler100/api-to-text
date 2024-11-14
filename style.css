@@ -53,6 +53,4 @@ span.copied {
 .copied {
   display: none;
   color: white;
-  /* or any contrasting color */
-  /* Additional styling as needed */
 }
