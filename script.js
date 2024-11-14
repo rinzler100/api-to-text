@@ -12,13 +12,24 @@ function copyToClipboard(event) {
 
 function flashColor(element, color) {
   let originalColor = window.getComputedStyle(element).backgroundColor;
+  let originalHeight = window.getComputedStyle(element).height;
   let copiedElement = element.querySelector('.copied');
-  element.style.backgroundColor = color;
+  let textNodes = Array.from(element.childNodes).filter(node => node.nodeType === Node.TEXT_NODE);
+
+  // Preserve original height
+  element.style.height = originalHeight;
+
+  // Hide all text nodes while showing "Copied!"
+  textNodes.forEach(node => node.textContent = '');
   copiedElement.style.opacity = 1;
+  element.style.backgroundColor = color;
+
   setTimeout(() => {
+    // Restore original text and styles
     element.style.backgroundColor = originalColor;
+    textNodes.forEach(node => node.textContent = element.getAttribute('data-message'));
     copiedElement.style.opacity = 0;
-  }, 4000);
+  }, 2500);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
